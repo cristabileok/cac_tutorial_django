@@ -10,8 +10,8 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de Creación")
     updated = models.DateTimeField(auto_now=True, verbose_name="Última Modificación")
     
-def __str__(self):
-    return self.title
+    def __str__(self):
+        return self.title
     
 class Meta:
     verbose_name = "proyecto"
