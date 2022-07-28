@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
-from .forms import ContactForm
+from .forms import ContactInfo
+from .models import ContactsDatabase
 
 # Create your views here.
 
@@ -21,16 +22,23 @@ def portfolio(request):
 
 def contact(request):
     if request.method == 'POST':
-        myForm = ContactForm(request.POST)
+        myForm = ContactInfo(request.POST)
         if myForm.is_valid():
             informationForm = myForm.cleaned_data
+            form_name = informationForm['name']
+            form_email = informationForm['email']
+            form_phone = informationForm['phone']
+            form_msj = informationForm['msj']
             
-            return render(request, "core/contact_thanks.html", {'info':informationForm})
+            art=ContactsDatabase.objects.create(name=form_name, email=form_email, phone=int(form_phone), msj=form_msj)
+            
+            
+            return render(request, "core/contact_thanks.html", {'info':informationForm,'form_name':form_name})
             
             #return HttpResponse(
             #    f"<h1>Gracias por enviar el formulario</h2><p>{informationForm}</p>")
         
     else:
-        myForm = ContactForm()
+        myForm = ContactInfo()
             
     return render(request, "core/contact.html", {'form':myForm})

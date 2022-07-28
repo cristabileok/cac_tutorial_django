@@ -1,13 +1,13 @@
 from django.contrib import admin
-from .forms import ContactForm
+from .models import ContactsDatabase
 
 # Register your models here.
 
-#class ContactFormAdmin(admin.ModelAdmin):
-    #list_display=('name','msj',)
-    #search_fields=("name","email","phone","msj")
-    #list_filter=("email")
-    #date_hierarchy=("phone")
-    #pass
+class ContactsDatabaseAdmin(admin.ModelAdmin):
+    readonly_fields=('created','updated')
+    list_display=('name','updated','created', 'email', 'phone')
+    search_fields=("name", "created","updated", 'email', 'phone')
+    list_filter=('updated',)
+    date_hierarchy="updated"
 
-#admin.site.register(ContactForm, ContactFormAdmin)
+admin.site.register(ContactsDatabase,ContactsDatabaseAdmin)
